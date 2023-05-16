@@ -8,6 +8,7 @@
 #include <sys/wait.h>
 #include <signal.h>
 #include <stddef.h>
+#include <stdbool.h>
 
 #define MAX_COMMAND_LENGTH 1024
 #define MAX_PATH_LENGTH 100
@@ -16,6 +17,7 @@ size_t _strcspn(const char *str1, const char *str2);
 void _puts(char *str);
 int _putchar(char c);
 int _strcmp(char *s1, char *s2);
+int _strncmp(const char *str1, const char *str2, size_t n);
 
 extern char **environ;
 void exit_func(char **command);
