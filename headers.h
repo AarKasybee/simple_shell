@@ -23,5 +23,6 @@ void env_func(char **command);
 void fork_new_process(char **command, char **path);
 
 char **get_path();
+char *_getenv(const char *name);
 /*ssize_t _getline(char **restrict line_ptr, size_t *restrict n, FILE * restrict stream);*/
 #endif
