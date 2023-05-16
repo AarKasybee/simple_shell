@@ -15,6 +15,7 @@
 size_t _strcspn(const char *str1, const char *str2);
 void _puts(char *str);
 int _putchar(char c);
+int _strcmp(char *s1, char *s2);
 
 extern char **environ;
 void exit_func(char **command);

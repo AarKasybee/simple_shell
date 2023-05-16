@@ -27,7 +27,7 @@ int main(void)
 			exit(0);
 		}
 		/* remove the newline character at the end of the command*/
-		input[strcspn(input, "\n")] = '\0';
+		input[_strcspn(input, "\n")] = '\0';
 		i = 0;
 		token = strtok(input, " ");
 		while (token != NULL && i < MAX_COMMAND_LENGTH - 1)

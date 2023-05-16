@@ -1,4 +1,7 @@
 #include "headers.h"
+#include <stdio.h>
+#include <string.h>
+
 /**
  * _strcat - a function that concatenates two strings.
  * @dest: an input string
@@ -105,8 +108,26 @@ char *_strdup(char *string)
 	return (dup);
 }
 
-#include <stdio.h>
-#include <string.h>
+/**
+ * _strchr - a function that locates character in a string
+ * @s: input string
+ * @c: input character
+ * Return: return pointer to c character
+ */
+
+char *_strchr(char *s, char c)
+{
+	while (*s)
+	{
+		if (c == *s)
+			return (s);
+		s++;
+	}
+	if (c == *s)
+		return (s);
+	return (NULL);
+}
+
 
 /**
  * _getenv - Retrieves the value of an environment variable.
@@ -124,7 +145,7 @@ char *_getenv(const char *name)
 	{
 		/* Split the variable into name and value */
 		char *variable = environ[i];
-		char *equal_sign = strchr(variable, '=');
+		char *equal_sign = _strchr(variable, '=');
 		size_t  name_length;
 		if (equal_sign == NULL)
 			continue;
