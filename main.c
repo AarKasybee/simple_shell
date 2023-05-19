@@ -26,6 +26,8 @@ int main(void)
 			free(input);
 			exit(0);
 		}
+		if (strcmp(input, "\n") == 0)
+			continue;
 		/* remove the newline character at the end of the command*/
 		input[_strcspn(input, "\n")] = '\0';
 		i = 0;

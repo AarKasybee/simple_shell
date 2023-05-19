@@ -27,4 +27,3 @@ char **get_path()
 	path[i] = NULL;
 	return (path);
 }
-
