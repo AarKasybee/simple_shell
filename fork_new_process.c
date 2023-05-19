@@ -15,6 +15,26 @@ void fork_new_process(char **command, char **path)
 
 	exit_func(command);
 	env_func(command);
+
+	if (access(command[0], X_OK) != 0)
+	{
+		char executable_path[MAX_PATH_LENGTH];
+		int i;
+		for (i = 0; path[i] != NULL; i++)
+		{
+			snprintf(executable_path, MAX_PATH_LENGTH, "%s/%s", path[i], command[0]);
+			if (access(executable_path, X_OK) == 0)
+			{
+				break;
+			}
+		}
+		if (path[i] == NULL)
+		{
+			printf("Command '%s' not found\n", command[0]);
+			return;
+		}
+	}
+
 	pid = fork();
 
 	if (pid == -1)
