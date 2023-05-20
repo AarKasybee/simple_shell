@@ -18,11 +18,11 @@ int main(void)
 
 	while (1)
 	{
-		printf("#cisfun$ ");
+		_puts("#cisfun$ ");
 		fflush(stdout); /*flush the output buffer*/
 		if (getline(&input, &input_size, stdin) == -1) /**EOF*/
 		{
-			printf("\n");
+			_puts("\n");
 			free(input);
 			exit(0);
 		}
