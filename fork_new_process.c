@@ -20,6 +20,7 @@ void fork_new_process(char **command, char **path)
 	{
 		char executable_path[MAX_PATH_LENGTH];
 		int i;
+
 		for (i = 0; path[i] != NULL; i++)
 		{
 			snprintf(executable_path, MAX_PATH_LENGTH, "%s/%s", path[i], command[0]);
@@ -73,7 +74,7 @@ void fork_new_process(char **command, char **path)
  *
  * Return: void
  */
-void int_str(int num, char* str)
+void int_str(int num, char *str)
 {
 	int i = 0;
 	int neg = 0;
@@ -107,6 +108,7 @@ void int_str(int num, char* str)
 	while (j < i)
 	{
 		char temp = str[j];
+
 		str[j] = str[i];
 		str[i] = temp;
 		j++;
