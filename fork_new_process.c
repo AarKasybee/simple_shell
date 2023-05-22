@@ -30,7 +30,12 @@ void fork_new_process(char **command, char **path)
 		}
 		if (path[i] == NULL)
 		{
-			printf("Command '%s' not found\n", command[0]);
+			_puts("Command ");
+			_puts("'");
+			_puts(command[0]);
+			_puts("'");
+			_puts(" not found");
+			_puts("\n");
 			return;
 		}
 	}
@@ -62,6 +67,54 @@ void fork_new_process(char **command, char **path)
 }
 
 /**
+ * int_str - convert int to string
+ * @num: int value
+ * @str: string variable
+ *
+ * Return: void
+ */
+void int_str(int num, char* str)
+{
+	int i = 0;
+	int neg = 0;
+	int j = 0;
+
+	if (num == 0)
+	{
+		str[i++] = '0';
+		str[i] = '\0';
+		return;
+	}
+	if (num < 0)
+	{
+		neg = 1;
+		num = -num;
+	}
+	while (num != 0)
+	{
+		int digit = num % 10;
+
+		str[i++] = digit + '0';
+		num /= 10;
+	}
+	if (neg)
+	{
+		str[i++] = '-';
+	}
+	str[i] = '\0';
+	i--;
+
+	while (j < i)
+	{
+		char temp = str[j];
+		str[j] = str[i];
+		str[i] = temp;
+		j++;
+		i--;
+	}
+}
+
+/**
  * call_parent - start the parent process
  * @command: user input command
  * @pid: process id
@@ -75,18 +128,33 @@ void call_parent(char **command, pid_t pid)
 	if (WIFEXITED(status))
 	{
 		int exit_status = WEXITSTATUS(status);
+		char _exit_status[10];
+
+		int_str(exit_status, _exit_status);
 
 		if (exit_status != 0)
 		{
-			printf("Command '%s' failed with exit status %d\n",
-				command[0], exit_status);
+			_puts("Command ");
+			_puts("'");
+			_puts(command[0]);
+			_puts("'");
+			_puts(" failed with exit status ");
+			_puts(_exit_status);
+			_puts("\n");
 		}
 	}
 	else if (WIFSIGNALED(status))
 	{
 		int signal_number = WTERMSIG(status);
+		char _signal_number[10];
 
-		printf("Command '%s' was terminated by signal %d\n",
-				  command[0], signal_number);
+		int_str(signal_number, _signal_number);
+		_puts("Command ");
+		_puts("'");
+		_puts(command[0]);
+		_puts("'");
+		_puts(" was terminated by signal ");
+		_puts(_signal_number);
+		_puts("\n");
 	}
 }

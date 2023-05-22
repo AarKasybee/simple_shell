@@ -14,6 +14,7 @@ void env_func(char **command)
 
 		while (*env)
 		{
+			_puts(*env++);
 			_puts("\n");
 		}
 		return;
