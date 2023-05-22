@@ -7,6 +7,6 @@
  *
  * Return: string character
  */
-char* _strtok(char* str, const char* delim)
+char *_strtok(char *str, const char *delim)
 {
 }
