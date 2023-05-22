@@ -18,6 +18,7 @@ void _puts(char *str);
 int _putchar(char c);
 int _strcmp(char *s1, char *s2);
 int _strncmp(const char *str1, const char *str2, size_t n);
+char* _strtok(char* str, const char* delim);
 
 extern char **environ;
 void exit_func(char **command);
