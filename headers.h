@@ -19,7 +19,7 @@ int _putchar(char c);
 int _strcmp(char *s1, char *s2);
 int _strlen(char *s);
 int _strncmp(const char *str1, const char *str2, size_t n);
-char* _strtok(char* str, const char* delim);
+char *_strtok(char *str, const char *delim);
 void int_to_str(int num, char *str);
 extern char **environ;
 void exit_func(char **command);

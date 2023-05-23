@@ -26,17 +26,17 @@ int main(void)
 			free(input);
 			exit(0);
 		}
-		if (strcmp(input, "\n") == 0)
+		if (_strcmp(input, "\n") == 0)
 			continue;
 		/* remove the newline character at the end of the command*/
 		input[_strcspn(input, "\n")] = '\0';
 		i = 0;
-		token = strtok(input, " ");
+		token = _strtok(input, " ");
 		while (token != NULL && i < MAX_COMMAND_LENGTH - 1)
 		{
 			command[i] = token;
 			i++;
-			token = strtok(NULL, " ");
+			token = _strtok(NULL, " ");
 		}
 		command[i] = NULL; /* terminate the array with a NULL pointer */
 		fork_new_process(command, path);
