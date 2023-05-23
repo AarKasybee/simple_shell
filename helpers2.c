@@ -4,7 +4,7 @@
  * _strcat - a function that concatenates two strings.
  * @dest: an input string
  * @src: an input string
- * Return: A pointer to the resulting string
+ * Return: A pointer to a resulting string
  */
 char *_strcat(char *dest, char *src)
 {
@@ -22,7 +22,7 @@ char *_strcat(char *dest, char *src)
  * _strcmp - Compare two strings
  * @s1: string
  * @s2: string
- * Return: negative int if s1 < s2, 0 if matching, and positive int if s1 > s2
+ * Return: negative int if s1 is less than s2, 0 if matching
  */
 
 int _strcmp(char *s1, char *s2)
@@ -44,7 +44,7 @@ int _strcmp(char *s1, char *s2)
  * @dest: pointer to the buffer in which we copy the string
  * @src: string to be copied
  *
- * Return: the pointer to dest
+ * Return: the pointer
  */
 char *_strcpy(char *dest, char *src)
 {
