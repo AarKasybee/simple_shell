@@ -23,7 +23,8 @@ void fork_new_process(char **command, char **path)
 
 		for (i = 0; path[i] != NULL; i++)
 		{
-			snprintf(executable_path, MAX_PATH_LENGTH, "%s/%s", path[i], command[0]);
+			_snprintf(path[i], command[0], executable_path);
+			/*snprintf(executable_path, MAX_PATH_LENGTH, "%s/%s", path[i], command[0]);*/
 			if (access(executable_path, X_OK) == 0)
 			{
 				break;
@@ -55,7 +56,8 @@ void fork_new_process(char **command, char **path)
 		execve(command[0], command, NULL);
 		for (i = 0; path[i] != NULL; i++)
 		{
-			snprintf(executable_path, MAX_PATH_LENGTH, "%s/%s", path[i], command[0]);
+			_snprintf(path[i], command[0], executable_path);
+			/*snprintf(executable_path, MAX_PATH_LENGTH, "%s/%s", path[i], command[0]);*/
 			execve(executable_path, command, NULL);
 		}
 		perror("./shell: "); /*if execve returns, it must have failed*/
@@ -64,55 +66,6 @@ void fork_new_process(char **command, char **path)
 	else /*parent process*/
 	{
 		call_parent(command, pid);
-	}
-}
-
-/**
- * int_str - convert int to string
- * @num: int value
- * @str: string variable
- *
- * Return: void
- */
-void int_str(int num, char *str)
-{
-	int i = 0;
-	int neg = 0;
-	int j = 0;
-
-	if (num == 0)
-	{
-		str[i++] = '0';
-		str[i] = '\0';
-		return;
-	}
-	if (num < 0)
-	{
-		neg = 1;
-		num = -num;
-	}
-	while (num != 0)
-	{
-		int digit = num % 10;
-
-		str[i++] = digit + '0';
-		num /= 10;
-	}
-	if (neg)
-	{
-		str[i++] = '-';
-	}
-	str[i] = '\0';
-	i--;
-
-	while (j < i)
-	{
-		char temp = str[j];
-
-		str[j] = str[i];
-		str[i] = temp;
-		j++;
-		i--;
 	}
 }
 
@@ -132,7 +85,7 @@ void call_parent(char **command, pid_t pid)
 		int exit_status = WEXITSTATUS(status);
 		char _exit_status[10];
 
-		int_str(exit_status, _exit_status);
+		int_to_str(exit_status, _exit_status);
 
 		if (exit_status != 0)
 		{
@@ -150,7 +103,7 @@ void call_parent(char **command, pid_t pid)
 		int signal_number = WTERMSIG(status);
 		char _signal_number[10];
 
-		int_str(signal_number, _signal_number);
+		int_to_str(signal_number, _signal_number);
 		_puts("Command ");
 		_puts("'");
 		_puts(command[0]);
