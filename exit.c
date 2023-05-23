@@ -1,8 +1,8 @@
 #include "headers.h"
 
 /**
- * exit_func - This function exits the terminal or the shell
- * @command: user input command
+ * exit_func - This function exits the terminal of the shell
+ * @command: user inputs command
  *
  * Return: nothing
  */

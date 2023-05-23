@@ -64,7 +64,7 @@ char *_strchr(char *s, char c)
 
 
 /**
- * _getenv - Retrieves the value of an environment variable.
+ * _getenv - Retrieves a value of an environment variable.
  * @name: The name of the environment variable.
  *
  * Return: The value of the environment variable, or NULL if not found.
@@ -73,10 +73,9 @@ char *_getenv(const char *name)
 {
 	int i;
 
-	/* Iterate through each environment variable */
+
 	for (i = 0; environ[i] != NULL; i++)
 	{
-		/* Split the variable into name and value */
 		char *variable = environ[i];
 		char *equal_sign = _strchr(variable, '=');
 		size_t  name_length;
