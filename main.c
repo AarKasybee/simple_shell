@@ -31,12 +31,12 @@ int main(void)
 		/* remove the newline character at the end of the command*/
 		input[_strcspn(input, "\n")] = '\0';
 		i = 0;
-		token = _strtok(input, " ");
+		token = strtok(input, " ");
 		while (token != NULL && i < MAX_COMMAND_LENGTH - 1)
 		{
 			command[i] = token;
 			i++;
-			token = _strtok(NULL, " ");
+			token = strtok(NULL, " ");
 		}
 		command[i] = NULL; /* terminate the array with a NULL pointer */
 		fork_new_process(command, path);
