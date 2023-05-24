@@ -1,7 +1,7 @@
 #include "headers.h"
 
 /**
- * _snprintf - Concatenates two strings and stores the result in a buffer.
+ * _snprintf - Should work like snprintf but without formatting
  * @input_str: First input string.
  * @input_str2: Second input string.
  * @str_buf: Buffer to store the concatenated string.

@@ -18,19 +18,19 @@ char *_strtok(char *str, const char *delim)
 
 	if (delim == NULL || *delim == '\0')
 	{
-		fprintf(stderr, "Invalid delimiter\n");
+		perror("Invalid delimiter");
 		return (NULL);
 	}
 
 	if (str != NULL)
 	{
-		size_t str_len = strlen(str);
+		size_t str_len = _strlen(str);
 
 		str_cpy = malloc((str_len + 1) * sizeof(char));
 		if (str_cpy == NULL)
 		{
 			/* memory allocation failure */
-			fprintf(stderr, "Memory allocation failed\n");
+			perror("Memory allocation failed");
 			return (NULL);
 		}
 
@@ -58,7 +58,7 @@ char *_strtok(char *str, const char *delim)
 					str_out = malloc((j + 1) * sizeof(char));
 					if (str_out == NULL)
 					{
-						fprintf(stderr, "Memory allocation failed\n");
+						perror("Memory allocation failed");
 						/*free(str_cpy);  free allocated memory before returning */
 						return (NULL);
 					}
@@ -81,7 +81,7 @@ char *_strtok(char *str, const char *delim)
 			str_out = malloc((j + 1) * sizeof(char));
 			if (str_out == NULL)
 			{
-				fprintf(stderr, "Memory allocation failed\n");
+				perror("Memory allocation failed");
 				/*free(str_cpy);  free allocated memory before returning */
 				return (NULL);
 			}
