@@ -31,4 +31,5 @@ void fork_new_process(char **command, char **path);
 char **get_path();
 char *_getenv(const char *name);
 char *_getenv1(const char *name);
+char *_strcat(char *dest, char *src)
 #endif
