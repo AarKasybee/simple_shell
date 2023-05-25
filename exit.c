@@ -13,4 +13,3 @@ void exit_func(char **command)
 		exit(0);
 	}
 }
-

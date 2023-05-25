@@ -69,7 +69,7 @@ char *_strchr(char *s, char c)
  *
  * Return: The value of the environment variable, or NULL if not found.
  */
-char *_getenv(const char *name)
+char *_getenv1(const char *name)
 {
 	int i;
 

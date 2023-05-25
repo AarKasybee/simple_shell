@@ -7,7 +7,7 @@
  */
 char **get_path()
 {
-	char *path_string = getenv("PATH");
+	char *path_string = _getenv("PATH");
 	char **path = malloc((MAX_COMMAND_LENGTH + 1) * sizeof(char *));
 	char *token;
 	int i = 0;
@@ -27,4 +27,3 @@ char **get_path()
 	path[i] = NULL;
 	return (path);
 }
-
