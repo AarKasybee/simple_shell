@@ -18,6 +18,7 @@ void _puts(char *str);
 int _putchar(char c);
 int _strcmp(char *s1, char *s2);
 int _strlen(char *s);
+char *_strcpy(char *dest, char *src);
 int _strncmp(const char *str1, const char *str2, size_t n);
 char *_strtok(char *str, const char *delim);
 void int_to_str(int num, char *str);
