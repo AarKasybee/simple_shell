@@ -7,25 +7,29 @@
  */
 int main(void)
 {
-	char input[MAX_COMMAND_LENGTH];
 	char *command[MAX_COMMAND_LENGTH];
 	char **path;
 	char *token;
 	int i;
+	char *input = NULL;
+	size_t input_size = 0;
 
 	path = get_path();
 
 	while (1)
 	{
-		printf("#cisfun$ ");
+		_puts("#cisfun$ ");
 		fflush(stdout); /*flush the output buffer*/
-		if (fgets(input, MAX_COMMAND_LENGTH, stdin) == NULL) /**EOF*/
+		if (getline(&input, &input_size, stdin) == -1) /**EOF*/
 		{
-			printf("\n");
+			_puts("\n");
+			free(input);
 			exit(0);
 		}
+		if (_strcmp(input, "\n") == 0)
+			continue;
 		/* remove the newline character at the end of the command*/
-		input[strcspn(input, "\n")] = '\0';
+		input[_strcspn(input, "\n")] = '\0';
 		i = 0;
 		token = strtok(input, " ");
 		while (token != NULL && i < MAX_COMMAND_LENGTH - 1)
@@ -37,5 +41,7 @@ int main(void)
 		command[i] = NULL; /* terminate the array with a NULL pointer */
 		fork_new_process(command, path);
 	}
+	free(input);
 	return (0);
 }
+

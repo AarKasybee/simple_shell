@@ -29,6 +29,6 @@ int _snprintf(char *input_str, char *input_str2, char *str_buf);
 void fork_new_process(char **command, char **path);
 
 char **get_path();
-char *_getenv(const char *name);
+char *_getenv(char *name);
 char *_getenv1(const char *name);
 #endif
