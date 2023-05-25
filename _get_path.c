@@ -17,12 +17,12 @@ char **get_path()
 		perror("getenv failed");
 		exit(1);
 	}
-	token = _strtok(path_string, ":");
+	token = strtok(path_string, ":");
 	while (token != NULL)
 	{
 		path[i] = token;
 		i++;
-		token = _strtok(NULL, ":");
+		token = strtok(NULL, ":");
 	}
 	path[i] = NULL;
 	return (path);

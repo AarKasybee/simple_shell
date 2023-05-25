@@ -23,7 +23,9 @@ void fork_new_process(char **command, char **path)
 
 		for (i = 0; path[i] != NULL; i++)
 		{
-			_snprintf(path[i], command[0], executable_path);
+			/*_snprintf(path[i], command[0], executable_path);*/
+			snprintf(executable_path, MAX_PATH_LENGTH, "%s/%s", path[i], command[0]);
+			/*_snprintf(path[i], command[0], executable_path);*/
 			if (access(executable_path, X_OK) == 0)
 			{
 				break;
@@ -55,7 +57,9 @@ void fork_new_process(char **command, char **path)
 		execve(command[0], command, NULL);
 		for (i = 0; path[i] != NULL; i++)
 		{
-			_snprintf(path[i], command[0], executable_path);
+			/*_snprintf(path[i], command[0], executable_path);*/
+			snprintf(executable_path, MAX_PATH_LENGTH, "%s/%s", path[i], command[0]);
+			/*_snprintf(path[i], command[0], executable_path);*/
 			execve(executable_path, command, NULL);
 		}
 		perror("./shell: "); /*if execve returns, it must have failed*/
