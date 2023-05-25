@@ -8,13 +8,13 @@
  */
 void env_func(char **command)
 {
-	if (strcmp(command[0], "env") == 0) /* handle env command */
+	if (_strcmp(command[0], "env") == 0) /* handle env command */
 	{
 		char **env = environ;
 
 		while (*env)
 		{
-			printf("%s\n", *env++);
+			_puts(*env++);
 		}
 		return;
 	}

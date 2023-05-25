@@ -32,4 +32,3 @@ int _snprintf(char *input_str, char *input_str2, char *str_buf)
 
 	return (i + j);
 }
-
