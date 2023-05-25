@@ -65,11 +65,11 @@ void fork_new_process(char **command, char **path)
 
 /**
  * call_parent - start the parent process
- * @command: user input command
+ * @pid_t: user input command
  * @pid: process id
  * Return: void
  */
-void call_parent(pid_t pid)
+void call_parent(pid_t, pid)
 {
 	int status;
 
