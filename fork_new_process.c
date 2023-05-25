@@ -1,6 +1,6 @@
 #include "headers.h"
 
-void call_parent(char **command, pid_t pid);
+void call_parent(pid_t pid);
 
 /**
  * fork_new_process - forks a new process within the parent process
@@ -15,6 +15,28 @@ void fork_new_process(char **command, char **path)
 
 	exit_func(command);
 	env_func(command);
+
+	if (access(command[0], X_OK) != 0)
+	{
+		char executable_path[MAX_PATH_LENGTH];
+		int i;
+
+		for (i = 0; path[i] != NULL; i++)
+		{
+			_snprintf(path[i], command[0], executable_path);
+			if (access(executable_path, X_OK) == 0)
+			{
+				break;
+			}
+		}
+		if (path[i] == NULL)
+		{
+			_puts("./shell: No such file or directory");
+			_puts("\n");
+			return;
+		}
+	}
+
 	pid = fork();
 
 	if (pid == -1)
@@ -29,7 +51,7 @@ void fork_new_process(char **command, char **path)
 		execve(command[0], command, NULL);
 		for (i = 0; path[i] != NULL; i++)
 		{
-			snprintf(executable_path, MAX_PATH_LENGTH, "%s/%s", path[i], command[0]);
+			_snprintf(path[i], command[0], executable_path);
 			execve(executable_path, command, NULL);
 		}
 		perror("./shell: "); /*if execve returns, it must have failed*/
@@ -37,17 +59,16 @@ void fork_new_process(char **command, char **path)
 	}
 	else /*parent process*/
 	{
-		call_parent(command, pid);
+		call_parent(pid);
 	}
 }
 
 /**
  * call_parent - start the parent process
- * @command: user input command
  * @pid: process id
  * Return: void
  */
-void call_parent(char **command, pid_t pid)
+void call_parent(pid_t pid)
 {
 	int status;
 
@@ -55,18 +76,24 @@ void call_parent(char **command, pid_t pid)
 	if (WIFEXITED(status))
 	{
 		int exit_status = WEXITSTATUS(status);
+		char _exit_status[10];
+
+		int_to_str(exit_status, _exit_status);
 
 		if (exit_status != 0)
 		{
-			printf("Command '%s' failed with exit status %d\n",
-				command[0], exit_status);
+			_puts("./shell: No such file or directory");
+			_puts("\n");
 		}
 	}
 	else if (WIFSIGNALED(status))
 	{
 		int signal_number = WTERMSIG(status);
+		char _signal_number[10];
 
-		printf("Command '%s' was terminated by signal %d\n",
-				  command[0], signal_number);
+		int_to_str(signal_number, _signal_number);
+		_puts("./shell: No such file or directory");
+		_puts("\n");
 	}
 }
+
