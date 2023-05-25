@@ -24,8 +24,6 @@ void fork_new_process(char **command, char **path)
 		for (i = 0; path[i] != NULL; i++)
 		{
 			_snprintf(path[i], command[0], executable_path);
-			/*snprintf(executable_path, MAX_PATH_LENGTH, "%s/%s", path[i], command[0]);*/
-			/*_snprintf(path[i], command[0], executable_path);*/
 			if (access(executable_path, X_OK) == 0)
 			{
 				break;
@@ -35,13 +33,6 @@ void fork_new_process(char **command, char **path)
 		{
 			_puts("./shell: No such file or directory");
 			_puts("\n");
-			/**
-			 * _puts("'");
-			 * _puts(command[0]);
-			 *_puts("'");
-			 *_puts(" not found");
-			 *_puts("\n");
-			 */
 			return;
 		}
 	}
@@ -61,8 +52,6 @@ void fork_new_process(char **command, char **path)
 		for (i = 0; path[i] != NULL; i++)
 		{
 			_snprintf(path[i], command[0], executable_path);
-			/*snprintf(executable_path, MAX_PATH_LENGTH, "%s/%s", path[i], command[0]);*/
-			/*_snprintf(path[i], command[0], executable_path);*/
 			execve(executable_path, command, NULL);
 		}
 		perror("./shell: "); /*if execve returns, it must have failed*/
@@ -96,15 +85,6 @@ void call_parent(pid_t pid)
 		{
 			_puts("./shell: No such file or directory");
 			_puts("\n");
-			/**
-			 * _puts("Command ");
-			 *_puts("'");
-			 *_puts(command[0]);
-			 *_puts("'");
-			 *_puts(" failed with exit status ");
-			 *_puts(_exit_status);
-			 *_puts("\n");
-			 */
 		}
 	}
 	else if (WIFSIGNALED(status))
