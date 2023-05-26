@@ -1,141 +1,138 @@
 #ifndef SHELL_H
 #define SHELL_H
 
-/********Libraries***************/
 #include <stdio.h>
 #include <unistd.h>
-#include <errno.h>
-#include <signal.h>
 #include <stdlib.h>
-#include <sys/wait.h>
+#include <string.h>
+#include <stddef.h>
+#include <errno.h>
 #include <sys/types.h>
+#include <sys/wait.h>
 #include <sys/stat.h>
-#include <stdarg.h>
+#include <signal.h>
 #include <fcntl.h>
 
-/***********defines***************/
-#define BUFFSIZE 128
-#define DELIM " \t\n"
-#define UNUSED __attribute__((unused))
+#include "macros.h"
 
 
-/*******data_struct***************/
 /**
- * data - struct holding program's data
- * @progName: program's name
- * @lineptr: line pointer
- * @cmd: command line tokenized
- * @envp: environment
+ * struct info- struct for the program's data
+ * @program_name: the name of the executable
+ * @input_line: pointer to the input read for _getline
+ * @command_name: pointer to the first command typed by the user
+ * @exec_counter: number of excecuted comands
+ * @file_descriptor: file descriptor to the input of commands
+ * @tokens: pointer to array of tokenized input
+ * @env: copy of the environ
+ * @alias_list: array of pointers with aliases.
  */
-typedef struct data_t
+typedef struct info
 {
-	char *progName;
-	char **argv;
-	char *lineptr;
-	char **cmd;
-	int cmdSize;
-	int cmdCounter;
-	char **envp;
-	char **alias;
-	int flag;
-	int modo;
-	char *pewd;
-} data_t;
+	char *program_name;
+	char *input_line;
+	char *command_name;
+	int exec_counter;
+	int file_descriptor;
+	char **tokens;
+	char **env;
+	char **alias_list;
+} data_of_program;
+
 /**
- * builtin_t - built-ins name and function
- * @name: name of the built-in
- * @f: the built-in's function
+ * struct builtins - struct for the builtins
+ * @builtin: the name of the builtin
+ * @function: the associated function to be called for each builtin
  */
-typedef struct builtin_t
+typedef struct builtins
 {
-	char *name;
-	int (*f)(data_t*, int);
-} builtin_t;
+	char *builtin;
+	int (*function)(data_of_program *data);
+} builtins;
+/*getline*/
+int _getline(data_of_program *data);
+int logic_op(char *array_commands[], int i, char array_operators[]);
 
-int handle_builtin_aliases(data_t *data, int idx);
-char *alias_handler(data_t *data, int pos);
-int print_aliases(data_t *data, char *alias);
-void add_alias(data_t *data, char *alia);
+/*aliasmgt*/
+int show_alias(data_of_program *data, char *alias);
+char *take_alias(data_of_program *data, char *alias);
+int fix_alias(char *alias_string, data_of_program *data);
 
-int check_builtin(data_t *data, char *cmd, int idx);
-int (*get_builtin_function(char *cmd))(data_t *, int);
+/*builtinenv*/
+int unset_env(data_of_program *data);
+int set_env(data_of_program *data);
+int builtin(data_of_program *data);
 
-int exit_builtin(data_t *data, int idx);
-int cd_builtin(data_t *data, UNUSED int idx);
-int env_builtin(data_t *data, UNUSED int idx);
-int setenv_builtin(data_t *data, int idx);
-int unsetenv_builtin(data_t *data, int idx);
+/*builtinlist*/
+int b_list(data_of_program *data);
+int b_exit(data_of_program *data);
 
-void set_environment_variable(data_t *data, char *name, char *value);
-int set_current_working_directory(data_t *data, char *new_directory, int p);
+int b_cd(data_of_program *data);
 
-char *get_environment_variable(char *var, data_t *data);
-char **copy_environment(char **env_copy, char **envp);
-char *compare_environment_variable(char *env_var, char *var);
-int count_environment_variables(data_t *data);
+int swd(data_of_program *data, char *new_dir);
 
-int fileopen(data_t *data);
-void fileclose(data_t *data, int fd);
+int b_help(data_of_program *data);
 
-int custom_readLine(data_t *data, int *size, int stream);
-int custom_helper(data_t *data, int read_count, int i);
+int b_alias(data_of_program *data);
 
-int checkOnlySpaces(char *line);
+/*builtinmore*/
+int builtin_exit(data_of_program *data);
+int builtin_cd(data_of_program *data);
+int set_work_directory(data_of_program *data, char *new_dir);
+int builtin_help(data_of_program *data);
+int builtin_alias(data_of_program *data);
 
-char *fix_executable_path(char *cmd, data_t *data);
-int count_commands(data_t *data);
-int compare_token(char *tok, int *sep, int *flag);
-int check_token(char *tok);
+/*envmanage*/
+char *get_key(char *name, data_of_program *data);
+int set_key(char *key, char *value, data_of_program *data);
+int del_key(char *key, data_of_program *data);
+void print_environ(data_of_program *data);
 
+/* execute*/
+int execute(data_of_program *data);
 
-void run_interactive_mode(int argc, data_t *data);
-void handle_processes(data_t *data);
-int process_helper(data_t *data, char **ptr, int *i, int *pos, int *c, int *cmp2);
-void fork_process(data_t *data, char **cmd, char *exe, int *stat);
+/*expansion*/
+void expand_variables(data_of_program *data);
+void enlarge_alias(data_of_program *data);
+int more_buffer(char *buffer, char *str_to_add);
 
-int is_directory(char *path);
-int is_digit(char *s);
-int atoi_custom(char *s);
+/*findinpath*/
+char **tokenize_path(data_of_program *data);
+int find(data_of_program *data);
+int checker(char *full_path);
 
+/*help1.c*/
+void free_array_of_pointers(char **directories);
+void free_data(data_of_program *data);
+void free_the_data(data_of_program *data);
 
-int main(int argc, char *argv[], char *envp[]);
-void initialize_data(data_t *data, char *argv[], char *envp[]);
-void handle_signal(UNUSED int sign);
+/*helpnum.c*/
+void long_to_string(long number, char *string, int base);
+int _atoi(char *s);
+int count_characters(char *string, char *character);
 
-char *_mem_copy(char *dest, char *src, unsigned int n);
-void *_reallocate(void *ptr, unsigned int old_size, unsigned int new_size);
-char *_str_duplicate(char *str);
-void free_data(data_t *data);
-void free_string_array(char **arr, int size);
+/*help_p*/
+int _print(char *string);
+int _printer(char *string);
+int _p_error(int errorcode, data_of_program *data);
 
+/*help_str*/
+int str_length(char *string);
+char *str_duplicate(char *string);
+int str_compare(char *string1, char *string2, int number);
+char *str_concat(char *string1, char *string2);
+void str_reverse(char *string);
 
-char *separate_operator(data_t *data);
-void separate_char(char *line, char *newLine, int *idx, int *jmp);
-void special_char(char *line, char *newLine, int *idx, int *jmp);
-void comment_handler(data_t *data);
+/*main.c*/
+void init_data(data_of_program *data, int arc, char *argv[], char **env);
+void sis_ffo(char *prompt, data_of_program *data);
+void handle_ctrl_c(int opr UNUSED);
 
-void special_var_handler(data_t *data);
-void get_var_value(data_t *data, int idx);
-void int_to_buffer(char *buff, int val);
+/*strtoken.c & tokenize */
+void tokenize(data_of_program *data);
 
-int _strcmp(const char *s1, const char *s2);
-int _strncmp(const char *s1, const char *s2, size_t n);
-char *_strcpy(char *dest, const char *src);
-int _strchr2(const char *s, int c);
-char *_strcat(char *dest, const char *src);
+char *_strtok(char *line, char *delim);
 
-char **custom_strtok(char *str, const char *delim, int *size);
-int countTokens(char *str, const char *delim);
-int getTokenLength(char *str, const char *delim, int index);
-int isDelimiter(char c, const char *delim);
-
-int prompt(data_t *data, int *n, int stream);
-char *_which(char *cmd, data_t *data);
-void Notfound(data_t *data);
-
-void _puts(char *s, int stream);
-int _putchar(char c);
-int _strlen(const char *s);
-void print_int(int n, int stream);
 
 #endif
+

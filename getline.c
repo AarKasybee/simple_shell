@@ -1,90 +1,96 @@
 #include "shell.h"
 
 /**
- * custom_readLine - Read a line from the stream
- * @data: Data holder
- * @size: Size of the line
- * @stream: Source to read from
- * Return: Number of characters read | -1 (failed)
+ * _getline - read one line from the prompt.
+ * @data: struct for the program's data
+ *
+ * Return: reading counting bytes.
  */
-int custom_readLine(data_t *data, int *size, int stream)
+int _getline(data_of_program *data)
 {
-	int i = 0, read_count = 0, flag = 0;
-	char current_char = '\0', *temp = NULL;
+	char buff[BUFFER_SIZE] = {'\0'};
+	static char *array_commands[10] = {NULL};
+	static char array_operators[10] = {'\0'};
+	ssize_t bytes_read, i = 0;
 
-	if (data->lineptr == NULL)
-		*size = 0;
 
-	for (i = 0; current_char != EOF && current_char != '\n'; i++)
+	if (!array_commands[0] || (array_operators[0] == '&' && errno != 0) ||
+			(array_operators[0] == '|' && errno == 0))
 	{
-		if (i >= *size)
+
+		for (i = 0; array_commands[i]; i++)
 		{
-			*size += BUFFSIZE;
-			temp = _realloc(data->lineptr, *size - BUFFSIZE, *size);
-			if (temp == NULL)
-			{
-				free(data->lineptr), data->lineptr = NULL;
-				return (-1);
-			}
-			data->lineptr = temp;
+			free(array_commands[i]);
+			array_commands[i] = NULL;
 		}
 
-		fflush(stdout);
-		read_count = read(stream, &current_char, 1);
-		read_count = custom_helper(data, read_count, i);
 
-		if (read_count == 0)
-			break;
-
-		if (read_count == -1)
+		bytes_read = read(data->file_descriptor, &buff, BUFFER_SIZE - 1);
+		if (bytes_read == 0)
 			return (-1);
 
-		if (flag == 0 && current_char == ' ')
-		{
-			i--;
-			continue;
-		}
-		else
-			flag = 1;
 
-		if (current_char == '\n')
-		{
-			data->lineptr[(i++)] = current_char;
-			break;
-		}
+		i = 0;
+		do {
+			array_commands[i] = str_duplicate(_strtok(i ? NULL : buff, "\n;"));
 
-		data->lineptr[i] = current_char;
+			i = logic_op(array_commands, i, array_operators);
+		} while (array_commands[i++]);
 	}
 
-	data->lineptr[i] = '\0';
-	return (i);
+
+	data->input_line = array_commands[0];
+	for (i = 0; array_commands[i]; i++)
+	{
+		array_commands[i] = array_commands[i + 1];
+		array_operators[i] = array_operators[i + 1];
+	}
+
+	return (str_length(data->input_line));
 }
 
+
 /**
- * custom_helper - Manage the read operation
- * @data: Data holder
- * @read_count: Read status
- * @i: Character count
- * Return: 0 (empty) | -1 (failed)
+ * logic_op - checks and split for && and || operators
+ * @array_commands: array of the commands.
+ * @i: index in the array_commands to be checked
+ * @array_operators: array of the logical operators for each previous command
+ *
+ * Return: index of the last command in the array_commands.
  */
-int custom_helper(data_t *data, int read_count, int i)
+int logic_op(char *array_commands[], int i, char array_operators[])
 {
-	if (read_count == 0)
+	char *temp = NULL;
+	int j;
+
+
+	for (j = 0; array_commands[i] != NULL  && array_commands[i][j]; j++)
 	{
-		if (i == 0)
+		if (array_commands[i][j] == '&' && array_commands[i][j + 1] == '&')
 		{
-			freeData(data);
-			exit(errno);
+
+			temp = array_commands[i];
+			array_commands[i][j] = '\0';
+			array_commands[i] = str_duplicate(array_commands[i]);
+			array_commands[i + 1] = str_duplicate(temp + j + 2);
+			i++;
+			array_operators[i] = '&';
+			free(temp);
+			j = 0;
 		}
-		return (0);
-	}
+		if (array_commands[i][j] == '|' && array_commands[i][j + 1] == '|')
+		{
 
-	if (read_count == -1)
-	{
-		free(data->lineptr), data->lineptr = NULL;
-		return (-1);
+			temp = array_commands[i];
+			array_commands[i][j] = '\0';
+			array_commands[i] = str_duplicate(array_commands[i]);
+			array_commands[i + 1] = str_duplicate(temp + j + 2);
+			i++;
+			array_operators[i] = '|';
+			free(temp);
+			j = 0;
+		}
 	}
-
-	return (read_count);
+	return (i);
 }
 
