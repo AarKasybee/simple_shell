@@ -64,8 +64,8 @@ char *aliasHandler(data_t *data, int pos)
 				data->cmd[pos][j] = data->alias[i][cmdlen + 1 + j];
 			}
 			data->cmd[pos][newlen] = '\0';
-			pos = 0; // Resetting position to check if there are more alias expansions
-			i = 0; // Resetting index to start from the beginning of the alias array
+			pos = 0; /* Resetting position to check if there are more alias expansions*/
+			i = 0; /*Resetting index to start from the beginning of the alias array*/
 		}
 		else
 		{
