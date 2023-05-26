@@ -69,7 +69,7 @@ int setPWD(data_t *data, char *newDir, int p)
 			_puts(newDir + pos + p, 2);
 			_puts("\n", 2);
 			errno = 2;
-			return 1;
+			return (1);
 		}
 		_setenv(data, "PWD", newDir + pos + p);
 	}
@@ -83,6 +83,6 @@ int setPWD(data_t *data, char *newDir, int p)
 	}
 	pos = _strchr2(prevdir, '=');
 	_setenv(data, "OLDPWD", prevdir + pos);
-	return 0;
+	return (0);
 }
 

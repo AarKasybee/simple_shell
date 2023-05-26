@@ -39,10 +39,10 @@ int main(int argc, char *argv[], char *envp[])
 		data.cmdCounter++;
 	}
 
-	return 0;
+	return (0);
 }
 /**
- * dataInit - data
+ * dataInitialize - data
  * @data: data holder
  * @argv: arguments array
  * @envp: environemnt array

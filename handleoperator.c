@@ -26,7 +26,7 @@ char *opSep(data_t *data)
 	}
 
 	if (opCount == 0)
-		return line;
+		return (line);
 
 	newlen = len + opCount * 2;
 	nline = malloc(sizeof(char) * (newlen + 1));
@@ -42,7 +42,7 @@ char *opSep(data_t *data)
 	}
 	nline[i + jmp] = '\0';
 	free(line);
-	return nline;
+	return (nline);
 }
 /**
  * opChar - separate && || and ; with spaces

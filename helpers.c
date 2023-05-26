@@ -16,7 +16,7 @@ char *exeFixer(char *cmd, data_t *data)
 		if (access(cmd, X_OK) == 0)
 			exe = cmd;
 		else
-			return NULL;
+			return (NULL);
 	}
 	else
 	{
@@ -25,13 +25,13 @@ char *exeFixer(char *cmd, data_t *data)
 		{
 			exe = _which(cmd, data);
 			if (exe != NULL)
-				return exe;
+				return (exe);
 
 			attempts--;
 		}
 	}
 
-	return exe;
+	return (exe);
 }
 
 /**
@@ -64,23 +64,23 @@ int tokCompare(char *tok, int *sep, int *flag)
 	if (_strcmp(tok, ";") == 0)
 	{
 		*sep = 1;
-		return 1;
+		return (1);
 	}
 
 	if (_strcmp(tok, "&&") == 0)
 	{
 		*sep = 2;
-		return 1;
+		return (1);
 	}
 
 	if (_strcmp(tok, "||") == 0)
 	{
 		*sep = 4;
-		return 1;
+		return (1);
 	}
 
 	(void)flag;
-	return 0;
+	return (0);
 }
 /**
  * tokChecker - token checker
@@ -90,14 +90,14 @@ int tokCompare(char *tok, int *sep, int *flag)
 int tokChecker(char *tok)
 {
 	if (_strcmp(tok, ";") == 0)
-		return 1;
+		return (1);
 
 	if (_strcmp(tok, "&&") == 0)
-		return 1;
+		return (1);
 
 	if (_strcmp(tok, "||") == 0)
-		return 1;
+		return (1);
 
-	return 0;
+	return (0);
 }
 

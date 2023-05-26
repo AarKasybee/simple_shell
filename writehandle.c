@@ -54,8 +54,10 @@ void print_int(int n, int stream)
 	} while ((n /= 10) > 0);
 	if (is_negative)
 		buffer[i++] = '-';
-	while (i > 0) {
-		switch (stream) {
+	while (i > 0)
+	{
+		switch (stream)
+		{
 			case 1:
 				putchar(buffer[--i]);
 				break;

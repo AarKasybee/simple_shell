@@ -12,14 +12,14 @@ int isDir(char *path)
 	if (status == 0)
 	{
 		if (S_ISDIR(st.st_mode))
-			return 1;
+			return (1);
 		else
-			return 0;
+			return (0);
 	}
 	else
 	{
 		perror("stat");
-		return 0;
+		return (0);
 	}
 }
 /**
@@ -65,7 +65,7 @@ int _atoi(char *s)
 
 	if (d0 == -1)
 	{
-		return 0;
+		return (0);
 	}
 
 	i = d0 + 1;
@@ -84,6 +84,6 @@ int _atoi(char *s)
 		i++;
 	}
 
-	return num * sign;
+	return (num * sign);
 }
 

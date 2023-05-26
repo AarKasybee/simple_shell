@@ -1,5 +1,12 @@
 #include "shell.h"
 
+/**
+ * _strtok - tokenize a string
+ * @str: string
+ * @delim: delimiter
+ * @size: size
+ * Return: Array of tokens
+ */
 char **_strtok(char *str, const char *delim, int *size)
 {
 	char **arrtok;
@@ -28,26 +35,15 @@ char **_strtok(char *str, const char *delim, int *size)
 
 		for (k = 0; k < toklen; k++)
 		{
-			switch (str[j])
-			{
-				case '\0':
-				case '\n':
-					arrtok[i][k] = '\0';
-					break;
-				default:
-					arrtok[i][k] = str[j];
-					break;
-			}
+			arrtok[i][k] = str[j];
 			j++;
 		}
 		arrtok[i][k] = '\0';
-	}
-	arrtok[i] = NULL;
+	} arrtok[i] = NULL;
 	return (arrtok);
 }
-
 /**
- * countTokens - counts the number of tokens in a string
+ * countTok - counts the number of tokens in a string
  * @str: string containing tokens
  * @delim: delimiter
  * Return: number of tokens
@@ -57,7 +53,7 @@ int countTok(char *str, const char *delim)
 	int i, count = 0;
 
 	if (str == NULL || delim == NULL)
-		return 0;
+		return (0);
 
 	for (i = 0; i < _strlen(str); i++)
 	{
@@ -68,7 +64,7 @@ int countTok(char *str, const char *delim)
 		}
 	}
 
-	return count;
+	return (count);
 }
 /**
  * tokLen - calculate the length of the token
@@ -90,7 +86,7 @@ int tokLen(char *str, const char *delim, int index)
 		len++;
 	}
 
-	return len;
+	return (len);
 }
 /**
  * isDelim - check if the character is equalt to a delimiter

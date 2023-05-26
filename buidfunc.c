@@ -13,7 +13,9 @@ int builtin_exit(data_t *data, int idx)
 	if (data->cmd[idx + 1] != NULL)
 	{
 		char *arg = data->cmd[idx + 1];
+
 		switch (_isDigit(arg))
+
 		{
 			case 1:
 				exit_code = _atoi(arg);
@@ -37,7 +39,7 @@ int builtin_exit(data_t *data, int idx)
 
 	freeData(data);
 	exit(errno);
-	return 1;
+	return (1);
 }
 /**
  * builtin_cd - cd builtin function
@@ -56,6 +58,7 @@ int builtin_cd(data_t *data, UNUSED int idx)
 	if (data->cmd[1] != NULL)
 	{
 		char *arg = data->cmd[1];
+
 		if (_strcmp(arg, "-") == 0)
 		{
 			prev_dir = _getenv("OLDPWD=", data);
@@ -83,7 +86,7 @@ int builtin_cd(data_t *data, UNUSED int idx)
 		status = setPWD(data, home_dir + pos, 0);
 	}
 
-	return status;
+	return (status);
 }
 
 /**
@@ -135,7 +138,7 @@ int builtin_setenv(data_t *data, int idx)
 		{
 			errno = ENOMEM;
 			perror("Error");
-			return 1;
+			return (1);
 		}
 
 		_strcpy(data->envp[i], var);
@@ -146,7 +149,7 @@ int builtin_setenv(data_t *data, int idx)
 		if (!found)
 			data->envp[i + 1] = NULL;
 	}
-	return 1;
+	return (1);
 }
 /**
  * builtin_unsetenv - unset an environment variable
@@ -178,6 +181,6 @@ int builtin_unsetenv(data_t *data, int idx)
 			i++;
 		}
 	}
-	return 1;
+	return (1);
 }
 

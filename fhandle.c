@@ -13,7 +13,7 @@ int openFile(data_t *data)
 	{
 		fd_src = open(data->argv[1], O_RDONLY);
 		if (fd_src != -1)
-			return fd_src;
+			return (fd_src);
 
 		attempts--;
 

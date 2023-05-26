@@ -1,6 +1,6 @@
 #include "shell.h"
 /**
- * builtinCheck - Check for builtin functions
+ * built - Check for builtin functions
  * @data: data holder
  * @cmd: command line
  * @idx: index

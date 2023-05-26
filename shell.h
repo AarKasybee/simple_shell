@@ -96,7 +96,7 @@ char *exeFixer(char *cmd, data_t *data);
 /* INTERACTIVE HANDLERS */
 void interactivemode(int ac, data_t *data);
 void handleprocess(data_t *data);
-int processHelper(data_t *data, char **ptr, int *i, int *pos,int *c, int *cmp);
+int processHelper(data_t *data, char **ptr, int *i, int *pos, int *c, int *cmp);
 void forking(data_t *data, char **cmd, char *exe, int *stat);
 
 /* LINE CHECK */

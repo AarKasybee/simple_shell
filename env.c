@@ -14,12 +14,12 @@ char *_getenv(char *var, data_t *data)
 	{
 		if (_strncmp(data->envp[i], var, len) == 0)
 		{
-			return data->envp[i];
+			return (data->envp[i]);
 		}
 		i++;
 	}
 
-	return NULL;
+	return (NULL);
 }
 /**
  * envcpy - make a copy of the environment variables
@@ -32,7 +32,7 @@ char **envcpy(char **envicopy, char **envp)
 	int i = 0;
 
 	if (envp == NULL)
-		return NULL;
+		return (NULL);
 
 	while (envp[i] != NULL)
 	{
@@ -40,7 +40,7 @@ char **envcpy(char **envicopy, char **envp)
 		i++;
 	}
 
-	return envicopy;
+	return (envicopy);
 }
 
 /**
@@ -54,7 +54,7 @@ char *envcmp(char *env, char *var)
 	int len;
 
 	if (env == NULL || var == NULL)
-		return NULL;
+		return (NULL);
 
 	len = _strlen(var);
 
@@ -62,12 +62,12 @@ char *envcmp(char *env, char *var)
 	{
 		if (_strncmp(var, env, len) == 0 && env[len] == '=')
 		{
-			return env;
+			return (env);
 		}
 		env++;
 	}
 
-	return NULL;
+	return (NULL);
 }
 /**
  * envCount - environement Counter
