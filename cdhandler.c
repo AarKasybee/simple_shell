@@ -1,3 +1,4 @@
+#include "shell.h"
 /**
  * set_environment_variable - Set or modify an environment variable
  * @data: Data holder
