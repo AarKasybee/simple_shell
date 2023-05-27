@@ -35,7 +35,7 @@ int show_environment(data_of_program *data)
 					set_value(variable_name, value_copy, data);
 					free(value_copy);
 				}
-				return 0;
+				return (0);
 			}
 			variable_name[i] = data->arguments[1][i];
 		}
@@ -43,7 +43,7 @@ int show_environment(data_of_program *data)
 		perror(data->command_name);
 		errno = 127;
 	}
-	return 0;
+	return (0);
 }
 
 

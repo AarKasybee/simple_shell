@@ -40,7 +40,7 @@ int read_line(data_of_program *data)
 		operator_array[i] = operator_array[i + 1];
 	}
 
-	return str_length(data->input_line);
+	return (str_length(data->input_line));
 }
 
 
@@ -82,6 +82,6 @@ int process_logic_op(char *command_array[], int index, char operator_array[])
 			j = 0;
 		}
 	}
-	return index;
+	return (index);
 }
 

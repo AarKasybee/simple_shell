@@ -22,9 +22,8 @@ int search_builtin(data_of_program *data)
 	{
 		if (str_compare(options[iterator].name, data->command_name, 0))
 		{
-			return options[iterator].function(data);
+			return (options[iterator].function(data));
 		}
 	}
-	return -1;
+	return (-1);
 }
-

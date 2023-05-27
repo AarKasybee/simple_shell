@@ -81,6 +81,6 @@ int count_occurrences(char *str, char *ch)
 		if (str[i] == ch[0])
 			count++;
 	}
-	return count;
+	return (count);
 }
 
