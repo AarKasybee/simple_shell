@@ -1,96 +1,87 @@
 #include "shell.h"
 
 /**
- * _getline - read one line from the prompt.
- * @data: struct for the program's data
+ * read_line - read one line from the prompt.
+ * @data: pointer to struct for the program's data.
  *
- * Return: reading counting bytes.
+ * Return: the number of bytes read.
  */
-int _getline(data_of_program *data)
+int read_line(data_of_program *data)
 {
-	char buff[BUFFER_SIZE] = {'\0'};
-	static char *array_commands[10] = {NULL};
-	static char array_operators[10] = {'\0'};
+	char buffer[BUFFER_SIZE] = {'\0'};
+	static char *command_array[10] = {NULL};
+	static char operator_array[10] = {'\0'};
 	ssize_t bytes_read, i = 0;
 
-
-	if (!array_commands[0] || (array_operators[0] == '&' && errno != 0) ||
-			(array_operators[0] == '|' && errno == 0))
+	if (!command_array[0] || (operator_array[0] == '&' && errno != 0) ||
+	    (operator_array[0] == '|' && errno == 0))
 	{
-
-		for (i = 0; array_commands[i]; i++)
+		for (i = 0; command_array[i]; i++)
 		{
-			free(array_commands[i]);
-			array_commands[i] = NULL;
+			free(command_array[i]);
+			command_array[i] = NULL;
 		}
 
-
-		bytes_read = read(data->file_descriptor, &buff, BUFFER_SIZE - 1);
+		bytes_read = read(data->file_descriptor, &buffer, BUFFER_SIZE - 1);
 		if (bytes_read == 0)
 			return (-1);
 
-
 		i = 0;
 		do {
-			array_commands[i] = str_duplicate(_strtok(i ? NULL : buff, "\n;"));
-
-			i = logic_op(array_commands, i, array_operators);
-		} while (array_commands[i++]);
+			command_array[i] = str_duplicate(_strtok(i ? NULL : buffer, "\n;"));
+			i = process_logic_op(command_array, i, operator_array);
+		} while (command_array[i++]);
 	}
 
-
-	data->input_line = array_commands[0];
-	for (i = 0; array_commands[i]; i++)
+	data->input_line = command_array[0];
+	for (i = 0; command_array[i]; i++)
 	{
-		array_commands[i] = array_commands[i + 1];
-		array_operators[i] = array_operators[i + 1];
+		command_array[i] = command_array[i + 1];
+		operator_array[i] = operator_array[i + 1];
 	}
 
-	return (str_length(data->input_line));
+	return str_length(data->input_line);
 }
 
 
 /**
- * logic_op - checks and split for && and || operators
- * @array_commands: array of the commands.
- * @i: index in the array_commands to be checked
- * @array_operators: array of the logical operators for each previous command
+ * process_logic_op - checks and splits for && and || operators.
+ * @command_array: array of commands.
+ * @index: index in the command_array to be checked.
+ * @operator_array: array of logical operators for each previous command.
  *
- * Return: index of the last command in the array_commands.
+ * Return: index of the last command in the command_array.
  */
-int logic_op(char *array_commands[], int i, char array_operators[])
+int process_logic_op(char *command_array[], int index, char operator_array[])
 {
 	char *temp = NULL;
 	int j;
 
-
-	for (j = 0; array_commands[i] != NULL  && array_commands[i][j]; j++)
+	for (j = 0; command_array[index] != NULL && command_array[index][j]; j++)
 	{
-		if (array_commands[i][j] == '&' && array_commands[i][j + 1] == '&')
+		if (command_array[index][j] == '&' && command_array[index][j + 1] == '&')
 		{
-
-			temp = array_commands[i];
-			array_commands[i][j] = '\0';
-			array_commands[i] = str_duplicate(array_commands[i]);
-			array_commands[i + 1] = str_duplicate(temp + j + 2);
-			i++;
-			array_operators[i] = '&';
+			temp = command_array[index];
+			command_array[index][j] = '\0';
+			command_array[index] = str_duplicate(command_array[index]);
+			command_array[index + 1] = str_duplicate(temp + j + 2);
+			index++;
+			operator_array[index] = '&';
 			free(temp);
 			j = 0;
 		}
-		if (array_commands[i][j] == '|' && array_commands[i][j + 1] == '|')
+		if (command_array[index][j] == '|' && command_array[index][j + 1] == '|')
 		{
-
-			temp = array_commands[i];
-			array_commands[i][j] = '\0';
-			array_commands[i] = str_duplicate(array_commands[i]);
-			array_commands[i + 1] = str_duplicate(temp + j + 2);
-			i++;
-			array_operators[i] = '|';
+			temp = command_array[index];
+			command_array[index][j] = '\0';
+			command_array[index] = str_duplicate(command_array[index]);
+			command_array[index + 1] = str_duplicate(temp + j + 2);
+			index++;
+			operator_array[index] = '|';
 			free(temp);
 			j = 0;
 		}
 	}
-	return (i);
+	return index;
 }
 

@@ -96,7 +96,7 @@ void sis_ffo(char *prompt, data_of_program *data)
 	while (++(data->exec_counter))
 	{
 		_print(prompt);
-		error_code = string_len = _getline(data);
+		error_code = string_len = read_line(data);
 
 		if (error_code == EOF)
 		{

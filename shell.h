@@ -58,7 +58,9 @@ typedef struct builtin_list
 
 /*getline*/
 int _getline(data_of_program *data);
+int read_line(data_of_program *data);
 int logic_op(char *array_commands[], int i, char array_operators[]);
+int process_logic_op(char *command_array[], int index, char operator_array[]);
 
 /*aliasmgt*/
 int show_alias(data_of_program *data, char *alias);
