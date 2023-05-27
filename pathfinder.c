@@ -4,7 +4,7 @@
 /**
  * find - find a program in path
  * @data: a pointer to the program's data
- * Return: 0 if success, errcode otherwise
+ * Return: 0 if success
  */
 
 int find(data_of_program *data)

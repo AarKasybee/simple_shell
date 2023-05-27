@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * _getline - read one line from the prompt.
+ * _getline - read one line from prompt
  * @data: struct for the program's data
  *
  * Return: reading counting bytes.
@@ -13,7 +13,6 @@ int _getline(data_of_program *data)
 	static char array_operators[10] = {'\0'};
 	ssize_t bytes_read, i = 0;
 
-
 	if (!array_commands[0] || (array_operators[0] == '&' && errno != 0) ||
 			(array_operators[0] == '|' && errno == 0))
 	{
@@ -24,11 +23,9 @@ int _getline(data_of_program *data)
 			array_commands[i] = NULL;
 		}
 
-
 		bytes_read = read(data->file_descriptor, &buff, BUFFER_SIZE - 1);
 		if (bytes_read == 0)
 			return (-1);
-
 
 		i = 0;
 		do {
@@ -37,7 +34,6 @@ int _getline(data_of_program *data)
 			i = logic_op(array_commands, i, array_operators);
 		} while (array_commands[i++]);
 	}
-
 
 	data->input_line = array_commands[0];
 	for (i = 0; array_commands[i]; i++)
@@ -51,18 +47,16 @@ int _getline(data_of_program *data)
 
 
 /**
- * logic_op - checks and split for && and || operators
+ * logic_op - checks for && and || operators
  * @array_commands: array of the commands.
  * @i: index in the array_commands to be checked
  * @array_operators: array of the logical operators for each previous command
- *
  * Return: index of the last command in the array_commands.
  */
 int logic_op(char *array_commands[], int i, char array_operators[])
 {
 	char *temp = NULL;
 	int j;
-
 
 	for (j = 0; array_commands[i] != NULL  && array_commands[i][j]; j++)
 	{

@@ -1,9 +1,9 @@
 #include "shell.h"
 /**
- * main - initialize the variables of the program
- * @argc: number of values received from the command line
- * @argv: values received from the command line
- * @env: number of values received from the command line
+ * main - initialize the variables
+ * @argc: number of values received from the line
+ * @argv: values received from the line
+ * @env: number of values received from the line
  * Return: zero on succes.
  */
 int main(int argc, char *argv[], char *env[])
@@ -26,8 +26,7 @@ int main(int argc, char *argv[], char *env[])
 }
 
 /**
- * handle_ctrl_c - print the prompt in a new line
- * when the signal SIGINT (ctrl + c) is send to the program
+ * handle_ctrl_c - print the prompt
  * @UNUSED: option of the prototype
  */
 void handle_ctrl_c(int opr UNUSED)
@@ -37,15 +36,15 @@ void handle_ctrl_c(int opr UNUSED)
 }
 
 /**
- * init_data - inicialize the struct with the info of the program
+ * init_data - inicialize the struct with the info
  * @data: pointer to the structure of data
  * @argv: array of arguments pased to the program execution
  * @env: environ pased to the program execution
- * @argc: number of values received from the command line
+ * @argc: number of values received
  */
 void init_data(data_of_program *data, int argc, char *argv[], char **env)
 {
-	int i = 0;
+	int x = 0;
 
 	data->program_name = argv[0];
 	data->input_line = NULL;
@@ -70,35 +69,35 @@ void init_data(data_of_program *data, int argc, char *argv[], char **env)
 	data->env = malloc(sizeof(char *) * 50);
 	if (env)
 	{
-		for (; env[i]; i++)
+		for (; env[x]; x++)
 		{
-			data->env[i] = str_duplicate(env[i]);
+			data->env[x] = str_duplicate(env[x]);
 		}
 	}
-	data->env[i] = NULL;
+	data->env[x] = NULL;
 	env = data->env;
 
 	data->alias_list = malloc(sizeof(char *) * 20);
-	for (i = 0; i < 20; i++)
+	for (x = 0; x < 20; x++)
 	{
-		data->alias_list[i] = NULL;
+		data->alias_list[x] = NULL;
 	}
 }
 /**
  * sis_ffo - its a infinite loop that shows the prompt
  * @prompt: prompt to be printed
- * @data: its a infinite loop that shows the prompt
+ * @data: infinite loop
  */
 void sis_ffo(char *prompt, data_of_program *data)
 {
-	int error_code = 0, string_len = 0;
+	int error_ = 0, string_len = 0;
 
 	while (++(data->exec_counter))
 	{
 		_print(prompt);
-		error_code = string_len = _getline(data);
+		error_ = string_len = _getline(data);
 
-		if (error_code == EOF)
+		if (error_ == EOF)
 		{
 			free_the_data(data);
 			exit(errno);
@@ -110,9 +109,9 @@ void sis_ffo(char *prompt, data_of_program *data)
 			tokenize(data);
 			if (data->tokens[0])
 			{
-				error_code = execute(data);
-				if (error_code != 0)
-					_p_error(error_code, data);
+				error_ = execute(data);
+				if (error_ != 0)
+					_p_error(error_, data);
 			}
 			free_data(data);
 		}

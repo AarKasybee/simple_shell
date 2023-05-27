@@ -7,7 +7,7 @@
  **/
 int b_list(data_of_program *data)
 {
-	int iterator;
+	int act;
 	builtins options[] = {
 		{"exit", b_exit},
 		{"help", b_help},
@@ -18,11 +18,11 @@ int b_list(data_of_program *data)
 		{"unsetenv", unset_env},
 		{NULL, NULL}
 	};
-	for (iterator = 0; options[iterator].builtin != NULL; iterator++)
+	for (act = 0; options[act].builtin != NULL; act++)
 	{
-		if (str_compare(options[iterator].builtin, data->command_name, 0))
+		if (str_compare(options[act].builtin, data->command_name, 0))
 		{
-			return (options[iterator].function(data));
+			return (options[act].function(data));
 		}
 	}
 	return (-1);
