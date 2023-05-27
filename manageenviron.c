@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * get_key - gets the value of an environment variable
+ * get_value - gets the value of an environment variable
  * @key: the environment variable of interest
  * @data: struct of the program's data
  * Return: a pointer to the value of the variable or NULL if it doesn't exist
@@ -28,7 +28,7 @@ char *get_value(char *key, data_of_program *data)
 }
 
 /**
- * set_key - overwrite the value of the environment variable
+ * set_value - overwrite the value of the environment variable
  * or create it if does not exist.
  * @key: name of the variable to set
  * @value: new value
@@ -105,7 +105,7 @@ int del_key(char *key, data_of_program *data)
 
 
 /**
- * print_environ - prints the current environ
+ * print_environment - prints the current environ
  * @data: struct for the program's data
  * Return: nothing
  */

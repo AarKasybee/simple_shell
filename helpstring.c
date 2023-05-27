@@ -134,7 +134,7 @@ char *str_concat(char *string1, char *string2)
 
 
 /**
- * str_reverse - reverses a string.
+ * reverse_string - reverses the input string.
  *
  * @string: pointer to string.
  * Return: void.
