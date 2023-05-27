@@ -23,7 +23,7 @@
  * @command_name: pointer to the first command typed by the user
  * @exec_counter: number of excecuted comands
  * @file_descriptor: file descriptor to the input of commands
- * @tokens: pointer to array of tokenized input
+ * @arguments: pointer to an array of argument tokens
  * @env: copy of the environ
  * @alias_list: array of pointers with aliases.
  */
@@ -34,7 +34,7 @@ typedef struct info
 	char *command_name;
 	int exec_counter;
 	int file_descriptor;
-	char **tokens;
+	char **arguments;
 	char **env;
 	char **alias_list;
 } data_of_program;
@@ -49,9 +49,27 @@ typedef struct builtins
 	char *builtin;
 	int (*function)(data_of_program *data);
 } builtins;
+
+/**
+ * struct builtin_list - Represents a built-in command
+ * and its corresponding function.
+ * @name: The name of the built-in command.
+ * @function: Pointer to the function that implements the built-in command.
+ *
+ * Description: This structure associates a built-in command name with its
+ *              corresponding function that handles the command.
+ */
+typedef struct builtin_list
+{
+	char *name;
+	int (*function)(data_of_program *data);
+} builtin_list;
+
 /*getline*/
 int _getline(data_of_program *data);
+int read_line(data_of_program *data);
 int logic_op(char *array_commands[], int i, char array_operators[]);
+int process_logic_op(char *command_array[], int index, char operator_array[]);
 
 /*aliasmgt*/
 int show_alias(data_of_program *data, char *alias);
@@ -62,9 +80,11 @@ int fix_alias(char *alias_string, data_of_program *data);
 int unset_env(data_of_program *data);
 int set_env(data_of_program *data);
 int builtin(data_of_program *data);
+int show_environment(data_of_program *data);
 
 /*builtinlist*/
 int b_list(data_of_program *data);
+int search_builtin(data_of_program *data);
 int b_exit(data_of_program *data);
 
 int b_cd(data_of_program *data);
@@ -84,9 +104,12 @@ int builtin_alias(data_of_program *data);
 
 /*envmanage*/
 char *get_key(char *name, data_of_program *data);
+char *get_value(char *key, data_of_program *data);
 int set_key(char *key, char *value, data_of_program *data);
+int set_value(char *key, char *value, data_of_program *data);
 int del_key(char *key, data_of_program *data);
 void print_environ(data_of_program *data);
+void print_environment(data_of_program *data);
 
 /* execute*/
 int execute(data_of_program *data);

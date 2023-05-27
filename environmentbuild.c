@@ -1,44 +1,43 @@
 #include "shell.h"
 
+
 /**
- * builtin - shows the environment of shell
- * @data: struct for the program
- * Return: zero if sucess
+ * show_environment - displays the environment of the shell.
+ * @data: pointer to struct for the program.
+ * Return: 0 if success.
  */
-int builtin(data_of_program *data)
+int show_environment(data_of_program *data)
 {
 	int i;
-	char cpname[50] = {'\0'};
-	char *var_copy = NULL;
+	char variable_name[50] = {'\0'};
+	char *value_copy = NULL;
 
-
-	if (data->tokens[1] == NULL)
-		print_environ(data);
+	if (data->arguments[1] == NULL)
+		print_environment(data);
 	else
 	{
-		for (i = 0; data->tokens[1][i]; i++)
+		for (i = 0; data->arguments[1][i]; i++)
 		{
-			if (data->tokens[1][i] == '=')
+			if (data->arguments[1][i] == '=')
 			{
-				var_copy = str_duplicate(get_key(cpname, data));
-				if (var_copy != NULL)
-					set_key(cpname, data->tokens[1] + i + 1, data);
+				value_copy = str_duplicate(get_value(variable_name, data));
+				if (value_copy != NULL)
+					set_value(variable_name, data->arguments[1] + i + 1, data);
 
-
-				print_environ(data);
-				if (get_key(cpname, data) == NULL)
+				print_environment(data);
+				if (get_value(variable_name, data) == NULL)
 				{
-					_print(data->tokens[1]);
+					_print(data->arguments[1]);
 					_print("\n");
 				}
 				else
 				{
-					set_key(cpname, var_copy, data);
-					free(var_copy);
+					set_value(variable_name, value_copy, data);
+					free(value_copy);
 				}
 				return (0);
 			}
-			cpname[i] = data->tokens[1][i];
+			variable_name[i] = data->arguments[1][i];
 		}
 		errno = 2;
 		perror(data->command_name);
@@ -47,6 +46,7 @@ int builtin(data_of_program *data)
 	return (0);
 }
 
+
 /**
  * set_env - set environment
  * @data: struct data
@@ -54,17 +54,16 @@ int builtin(data_of_program *data)
  */
 int set_env(data_of_program *data)
 {
-
-	if (data->tokens[1] == NULL || data->tokens[2] == NULL)
+	if (data->arguments[1] == NULL || data->arguments[2] == NULL)
 		return (0);
-	if (data->tokens[3] != NULL)
+	if (data->arguments[3] != NULL)
 	{
 		errno = E2BIG;
 		perror(data->command_name);
 		return (5);
 	}
 
-	set_key(data->tokens[1], data->tokens[2], data);
+	set_value(data->arguments[1], data->arguments[2], data);
 
 	return (0);
 }
@@ -76,16 +75,15 @@ int set_env(data_of_program *data)
  */
 int unset_env(data_of_program *data)
 {
-	if (data->tokens[1] == NULL)
+	if (data->arguments[1] == NULL)
 		return (0);
-	if (data->tokens[2] != NULL)
+	if (data->arguments[2] != NULL)
 	{
 		errno = E2BIG;
 		perror(data->command_name);
 		return (5);
 	}
-	del_key(data->tokens[1], data);
+	del_key(data->arguments[1], data);
 
 	return (0);
 }
-

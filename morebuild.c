@@ -9,16 +9,16 @@ int b_exit(data_of_program *data)
 {
 	int i;
 
-	if (data->tokens[1] != NULL)
+	if (data->arguments[1] != NULL)
 	{
-		for (i = 0; data->tokens[1][i]; i++)
-			if ((data->tokens[1][i] < '0' || data->tokens[1][i] > '9')
-					&& data->tokens[1][i] != '+')
+		for (i = 0; data->arguments[1][i]; i++)
+			if ((data->arguments[1][i] < '0' || data->arguments[1][i] > '9')
+					&& data->arguments[1][i] != '+')
 			{
 				errno = 2;
 				return (2);
 			}
-		errno = string_to_integer(data->tokens[1]);
+		errno = string_to_integer(data->arguments[1]);
 	}
 	free_the_data(data);
 	exit(errno);
@@ -31,25 +31,25 @@ int b_exit(data_of_program *data)
  */
 int b_cd(data_of_program *data)
 {
-	char *dir_home = get_key("HOME", data), *dir_old = NULL;
+	char *dir_home = get_value("HOME", data), *dir_old = NULL;
 	char old_dir[128] = {0};
 	int error_code = 0;
 
-	if (data->tokens[1])
+	if (data->arguments[1])
 	{
-		if (str_compare(data->tokens[1], "-", 0))
+		if (str_compare(data->arguments[1], "-", 0))
 		{
-			dir_old = get_key("OLDPWD", data);
+			dir_old = get_value("OLDPWD", data);
 			if (dir_old)
 				error_code = swd(data, dir_old);
-			_print(get_key("PWD", data));
+			_print(get_value("PWD", data));
 			_print("\n");
 
 			return (error_code);
 		}
 		else
 		{
-			return (swd(data, data->tokens[1]));
+			return (swd(data, data->arguments[1]));
 		}
 	}
 	else
@@ -83,9 +83,9 @@ int swd(data_of_program *data, char *new_dir)
 			errno = 2;
 			return (3);
 		}
-		set_key("PWD", new_dir, data);
+		set_value("PWD", new_dir, data);
 	}
-	set_key("OLDPWD", old_dir, data);
+	set_value("OLDPWD", old_dir, data);
 	return (0);
 }
 
@@ -101,12 +101,12 @@ int b_help(data_of_program *data)
 
 	mensajes[0] = HELP_MSG;
 
-	if (data->tokens[1] == NULL)
+	if (data->arguments[1] == NULL)
 	{
 		_print(mensajes[0] + 6);
 		return (1);
 	}
-	if (data->tokens[2] != NULL)
+	if (data->arguments[2] != NULL)
 	{
 		errno = E2BIG;
 		perror(data->command_name);
@@ -120,8 +120,8 @@ int b_help(data_of_program *data)
 
 	for (i = 0; mensajes[i]; i++)
 	{
-		length = str_length(data->tokens[1]);
-		if (str_compare(data->tokens[1], mensajes[i], length))
+		length = str_length(data->arguments[1]);
+		if (str_compare(data->arguments[1], mensajes[i], length))
 		{
 			_print(mensajes[i] + length + 1);
 			return (1);
@@ -141,15 +141,15 @@ int b_alias(data_of_program *data)
 {
 	int i = 0;
 
-	if (data->tokens[1] == NULL)
+	if (data->arguments[1] == NULL)
 		return (show_alias(data, NULL));
 
-	while (data->tokens[++i])
+	while (data->arguments[++i])
 	{
-		if (count_occurrences(data->tokens[i], "="))
-			fix_alias(data->tokens[i], data);
+		if (count_occurrences(data->arguments[i], "="))
+			fix_alias(data->arguments[i], data);
 		else
-			show_alias(data, data->tokens[i]);
+			show_alias(data, data->arguments[i]);
 	}
 	return (0);
 }

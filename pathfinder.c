@@ -19,9 +19,9 @@ int find(data_of_program *data)
 	if (data->command_name[0] == '/' || data->command_name[0] == '.')
 		return (checker(data->command_name));
 
-	free(data->tokens[0]);
-	data->tokens[0] = str_concat(str_duplicate("/"), data->command_name);
-	if (!data->tokens[0])
+	free(data->arguments[0]);
+	data->arguments[0] = str_concat(str_duplicate("/"), data->command_name);
+	if (!data->arguments[0])
 		return (2);
 
 	directories = tokenize_path(data);
@@ -33,19 +33,19 @@ int find(data_of_program *data)
 	}
 	for (i = 0; directories[i]; i++)
 	{
-		directories[i] = str_concat(directories[i], data->tokens[0]);
+		directories[i] = str_concat(directories[i], data->arguments[0]);
 		ret_code = checker(directories[i]);
 		if (ret_code == 0 || ret_code == 126)
 		{
 			errno = 0;
-			free(data->tokens[0]);
-			data->tokens[0] = str_duplicate(directories[i]);
+			free(data->arguments[0]);
+			data->arguments[0] = str_duplicate(directories[i]);
 			free_array_of_pointers(directories);
 			return (ret_code);
 		}
 	}
-	free(data->tokens[0]);
-	data->tokens[0] = NULL;
+	free(data->arguments[0]);
+	data->arguments[0] = NULL;
 	free_array_of_pointers(directories);
 	return (ret_code);
 }
@@ -64,7 +64,7 @@ char **tokenize_path(data_of_program *data)
 	char *PATH;
 
 
-	PATH = get_key("PATH", data);
+	PATH = get_value("PATH", data);
 	if ((PATH == NULL) || PATH[0] == '\0')
 	{
 		return (NULL);

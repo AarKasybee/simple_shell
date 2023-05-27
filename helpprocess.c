@@ -40,12 +40,12 @@ int _p_error(int errorcode, data_of_program *data)
 		_printer(": ");
 		_printer(n_as_string);
 		_printer(": ");
-		_printer(data->tokens[0]);
+		_printer(data->arguments[0]);
 		if (errorcode == 2)
 			_printer(": Illegal number: ");
 		else
 			_printer(": can't cd to ");
-		_printer(data->tokens[1]);
+		_printer(data->arguments[1]);
 		_printer("\n");
 	}
 	else if (errorcode == 127)

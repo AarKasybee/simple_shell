@@ -7,8 +7,8 @@
  */
 void free_data(data_of_program *data)
 {
-	if (data->tokens)
-		free_array_of_pointers(data->tokens);
+	if (data->arguments)
+		free_array_of_pointers(data->arguments);
 	if (data->input_line)
 		free(data->input_line);
 	if (data->command_name)
@@ -16,7 +16,7 @@ void free_data(data_of_program *data)
 
 	data->input_line = NULL;
 	data->command_name = NULL;
-	data->tokens = NULL;
+	data->arguments = NULL;
 }
 
 /**
