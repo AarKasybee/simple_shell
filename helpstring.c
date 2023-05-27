@@ -1,20 +1,21 @@
 #include "shell.h"
 
 /**
- * str_length - returns the length of string.
+ * str_length - returns the length of a string.
  * @string: pointer to string.
  * Return: length of string.
  */
 int str_length(char *string)
 {
-	int len = 0;
+	int length = 0;
 
 	if (string == NULL)
 		return (0);
-	while (string[len++] != '\0')
+
+	while (string[length++] != '\0')
 	{
 	}
-	return (--len);
+	return (--length);
 }
 
 /**
@@ -25,12 +26,14 @@ int str_length(char *string)
 char *str_duplicate(char *string)
 {
 	char *result;
-	int len, x;
+	int length, i;
 
 	if (string == NULL)
 		return (NULL);
-	len = str_length(string) + 1;
-	result = malloc(sizeof(char) * len);
+
+	length = str_length(string) + 1;
+
+	result = malloc(sizeof(char) * length);
 
 	if (result == NULL)
 	{
@@ -38,9 +41,9 @@ char *str_duplicate(char *string)
 		perror("Error");
 		return (NULL);
 	}
-	for (x = 0; x < len ; x++)
+	for (i = 0; i < length ; i++)
 	{
-		result[x] = string[x];
+		result[i] = string[i];
 	}
 
 	return (result);
@@ -50,8 +53,8 @@ char *str_duplicate(char *string)
  * str_compare - Compare two strings
  * @string1: String one, or the shorter
  * @string2: String two, or the longer
- * @number: number of characters to be compared
- * Return: 1 if the strings are equals
+ * @number: number of characters to be compared, 0 if infinite
+ * Return: 1 if the strings are equals,0 if the strings are different
  */
 int str_compare(char *string1, char *string2, int number)
 {
@@ -59,8 +62,10 @@ int str_compare(char *string1, char *string2, int number)
 
 	if (string1 == NULL && string2 == NULL)
 		return (1);
+
 	if (string1 == NULL || string2 == NULL)
 		return (0);
+
 	if (number == 0)
 	{
 		if (str_length(string1) != str_length(string2))
@@ -111,6 +116,7 @@ char *str_concat(char *string1, char *string2)
 		return (NULL);
 	}
 
+
 	for (length1 = 0; string1[length1] != '\0'; length1++)
 		result[length1] = string1[length1];
 	free(string1);
@@ -136,14 +142,14 @@ char *str_concat(char *string1, char *string2)
 void reverse_string(char *string)
 {
 
-	int i = 0, len = str_length(string) - 1;
+	int i = 0, length = str_length(string) - 1;
 	char hold;
 
-	while (i < len)
+	while (i < length)
 	{
 		hold = string[i];
-		string[i++] = string[len];
-		string[len--] = hold;
+		string[i++] = string[length];
+		string[length--] = hold;
 	}
 }
 
