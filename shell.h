@@ -34,7 +34,7 @@ typedef struct info
 	char *command_name;
 	int exec_counter;
 	int file_descriptor;
-	char **tokens;
+	char **arguments;
 	char **env;
 	char **alias_list;
 } data_of_program;
@@ -71,6 +71,7 @@ int fix_alias(char *alias_string, data_of_program *data);
 int unset_env(data_of_program *data);
 int set_env(data_of_program *data);
 int builtin(data_of_program *data);
+int show_environment(data_of_program *data);
 
 /*builtinlist*/
 int b_list(data_of_program *data);
@@ -94,9 +95,12 @@ int builtin_alias(data_of_program *data);
 
 /*envmanage*/
 char *get_key(char *name, data_of_program *data);
+char *get_value(char *key, data_of_program *data);
 int set_key(char *key, char *value, data_of_program *data);
+int set_value(char *key, char *value, data_of_program *data);
 int del_key(char *key, data_of_program *data);
 void print_environ(data_of_program *data);
+void print_environment(data_of_program *data);
 
 /* execute*/
 int execute(data_of_program *data);

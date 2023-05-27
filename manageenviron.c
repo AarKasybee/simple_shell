@@ -6,7 +6,7 @@
  * @data: struct of the program's data
  * Return: a pointer to the value of the variable or NULL if it doesn't exist
  */
-char *get_key(char *key, data_of_program *data)
+char *get_value(char *key, data_of_program *data)
 {
 	int i, key_length = 0;
 
@@ -36,7 +36,7 @@ char *get_key(char *key, data_of_program *data)
  * Return: 1 if the parameters are NULL, 2 if there is an erroror 0 if sucess.
  */
 
-int set_key(char *key, char *value, data_of_program *data)
+int set_value(char *key, char *value, data_of_program *data)
 {
 	int i, key_length = 0, is_new_key = 1;
 
@@ -109,7 +109,7 @@ int del_key(char *key, data_of_program *data)
  * @data: struct for the program's data
  * Return: nothing
  */
-void print_environ(data_of_program *data)
+void print_environment(data_of_program *data)
 {
 	int j;
 

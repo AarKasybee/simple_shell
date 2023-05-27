@@ -13,7 +13,7 @@ int search_builtin(data_of_program *data)
 		{"help", b_help},
 		{"cd", b_cd},
 		{"alias", b_alias},
-		{"env", builtin},
+		{"env", show_environment},
 		{"setenv", set_env},
 		{"unsetenv", unset_env},
 		{NULL, NULL}

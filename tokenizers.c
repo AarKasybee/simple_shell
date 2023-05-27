@@ -67,18 +67,17 @@ void tokenize(data_of_program *data)
 		}
 	}
 
-	data->tokens = malloc(counter * sizeof(char *));
-	if (data->tokens == NULL)
+	data->arguments = malloc(counter * sizeof(char *));
+	if (data->arguments == NULL)
 	{
 		perror(data->program_name);
 		exit(errno);
 	}
 	i = 0;
-	data->tokens[i] = str_duplicate(_strtok(data->input_line, delimiter));
-	data->command_name = str_duplicate(data->tokens[0]);
-	while (data->tokens[i++])
+	data->arguments[i] = str_duplicate(_strtok(data->input_line, delimiter));
+	data->command_name = str_duplicate(data->arguments[0]);
+	while (data->arguments[i++])
 	{
-		data->tokens[i] = str_duplicate(_strtok(NULL, delimiter));
+		data->arguments[i] = str_duplicate(_strtok(NULL, delimiter));
 	}
 }
-

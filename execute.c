@@ -29,7 +29,7 @@ int execute(data_of_program *data)
 		}
 		if (pidd == 0)
 		{
-			retval = execve(data->tokens[0], data->tokens, data->env);
+			retval = execve(data->arguments[0], data->arguments, data->env);
 			if (retval == -1)
 				perror(data->command_name), exit(EXIT_FAILURE);
 		}

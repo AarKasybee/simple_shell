@@ -37,7 +37,7 @@ void expand_variables(data_of_program *data)
 		{
 			for (j = 1; line[i + j] && line[i + j] != ' '; j++)
 				expansion[j - 1] = line[i + j];
-			temp = get_key(expansion, data);
+			temp = get_value(expansion, data);
 			line[i] = '\0', expansion[0] = '\0';
 			more_buffer(expansion, line + i + j);
 			temp ? more_buffer(line, temp) : 1;

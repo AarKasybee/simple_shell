@@ -66,7 +66,7 @@ void init_data(data_of_program *data, int argc, char *argv[], char **env)
 			exit(127);
 		}
 	}
-	data->tokens = NULL;
+	data->arguments = NULL;
 	data->env = malloc(sizeof(char *) * 50);
 	if (env)
 	{
@@ -108,7 +108,7 @@ void sis_ffo(char *prompt, data_of_program *data)
 			enlarge_alias(data);
 			expand_variables(data);
 			tokenize(data);
-			if (data->tokens[0])
+			if (data->arguments[0])
 			{
 				error_code = execute(data);
 				if (error_code != 0)
