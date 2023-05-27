@@ -23,7 +23,7 @@
  * @command_name: pointer to the first command typed by the user
  * @exec_counter: number of excecuted comands
  * @file_descriptor: file descriptor to the input of commands
- * @tokens: pointer to array of tokenized input
+ * @arguments: pointer to an array of argument tokens
  * @env: copy of the environ
  * @alias_list: array of pointers with aliases.
  */
@@ -50,6 +50,15 @@ typedef struct builtins
 	int (*function)(data_of_program *data);
 } builtins;
 
+/**
+ * struct builtin_list - Represents a built-in command
+ * and its corresponding function.
+ * @name: The name of the built-in command.
+ * @function: Pointer to the function that implements the built-in command.
+ *
+ * Description: This structure associates a built-in command name with its
+ *              corresponding function that handles the command.
+ */
 typedef struct builtin_list
 {
 	char *name;
