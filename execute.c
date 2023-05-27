@@ -9,7 +9,7 @@ int execute(data_of_program *data)
 	int retval = 0, status;
 	pid_t pidd;
 
-	retval = b_list(data);
+	retval = search_builtin(data);
 	if (retval != -1)
 		return (retval);
 

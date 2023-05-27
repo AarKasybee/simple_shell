@@ -1,14 +1,14 @@
 #include "shell.h"
 
 /**
- * b_list - search for match
- * @data: struct data
- * Return: Returns the return of the function
+ * search_builtin - search for a match in the list of built-ins.
+ * @data: pointer to struct data.
+ * Return: the return value of the function.
  **/
-int b_list(data_of_program *data)
+int search_builtin(data_of_program *data)
 {
 	int iterator;
-	builtins options[] = {
+	builtin_list options[] = {
 		{"exit", b_exit},
 		{"help", b_help},
 		{"cd", b_cd},
@@ -18,13 +18,13 @@ int b_list(data_of_program *data)
 		{"unsetenv", unset_env},
 		{NULL, NULL}
 	};
-	for (iterator = 0; options[iterator].builtin != NULL; iterator++)
+	for (iterator = 0; options[iterator].name != NULL; iterator++)
 	{
-		if (str_compare(options[iterator].builtin, data->command_name, 0))
+		if (str_compare(options[iterator].name, data->command_name, 0))
 		{
-			return (options[iterator].function(data));
+			return options[iterator].function(data);
 		}
 	}
-	return (-1);
+	return -1;
 }
 

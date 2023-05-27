@@ -49,6 +49,13 @@ typedef struct builtins
 	char *builtin;
 	int (*function)(data_of_program *data);
 } builtins;
+
+typedef struct builtin_list
+{
+	char *name;
+	int (*function)(data_of_program *data);
+} builtin_list;
+
 /*getline*/
 int _getline(data_of_program *data);
 int logic_op(char *array_commands[], int i, char array_operators[]);
@@ -65,6 +72,7 @@ int builtin(data_of_program *data);
 
 /*builtinlist*/
 int b_list(data_of_program *data);
+int search_builtin(data_of_program *data);
 int b_exit(data_of_program *data);
 
 int b_cd(data_of_program *data);
