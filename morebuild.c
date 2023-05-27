@@ -18,7 +18,7 @@ int b_exit(data_of_program *data)
 				errno = 2;
 				return (2);
 			}
-		errno = _atoi(data->tokens[1]);
+		errno = string_to_integer(data->tokens[1]);
 	}
 	free_the_data(data);
 	exit(errno);
@@ -146,7 +146,7 @@ int b_alias(data_of_program *data)
 
 	while (data->tokens[++i])
 	{
-		if (count_characters(data->tokens[i], "="))
+		if (count_occurrences(data->tokens[i], "="))
 			fix_alias(data->tokens[i], data);
 		else
 			show_alias(data, data->tokens[i]);

@@ -122,6 +122,9 @@ char *str_duplicate(char *string);
 int str_compare(char *string1, char *string2, int number);
 char *str_concat(char *string1, char *string2);
 void str_reverse(char *string);
+void reverse_string(char *string);
+int string_to_integer(char *str);
+int count_occurrences(char *str, char *ch);
 
 /*main.c*/
 void init_data(data_of_program *data, int arc, char *argv[], char **env);

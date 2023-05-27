@@ -1,86 +1,86 @@
 #include "shell.h"
 
 /**
- * long_to_string - converts a number to a string.
- * @number: number to be converten in an string.
- * @string: buffer to save the number as string.
- * @base: base to convert number
+ * convert_number_to_string - converts a number to a string.
+ * @number: number to be converted into a string.
+ * @string_buffer: buffer to save the number as a string.
+ * @base: base to convert the number.
  *
  * Return: Nothing.
  */
-void long_to_string(long number, char *string, int base)
+void long_to_string(long number, char *string_buffer, int base)
 {
-	int index = 0, inNegative = 0;
-	long cociente = number;
-	char letters[] = {"0123456789abcdef"};
+	int index = 0, is_negative = 0;
+	long quotient = number;
+	char conversion_table[] = {"0123456789abcdef"};
 
-	if (cociente == 0)
-		string[index++] = '0';
+	if (quotient == 0)
+		string_buffer[index++] = '0';
 
-	if (string[0] == '-')
-		inNegative = 1;
+	if (string_buffer[0] == '-')
+		is_negative = 1;
 
-	while (cociente)
+	while (quotient)
 	{
-		if (cociente < 0)
-			string[index++] = letters[-(cociente % base)];
+		if (quotient < 0)
+			string_buffer[index++] = conversion_table[-(quotient % base)];
 		else
-			string[index++] = letters[cociente % base];
-		cociente /= base;
+			string_buffer[index++] = conversion_table[quotient % base];
+		quotient /= base;
 	}
-	if (inNegative)
-		string[index++] = '-';
 
-	string[index] = '\0';
-	str_reverse(string);
+	if (is_negative)
+		string_buffer[index++] = '-';
+
+	string_buffer[index] = '\0';
+	reverse_string(string_buffer);
 }
 
-
 /**
- * _atoi - convert a string to an integer.
+ * string_to_integer - convert a string to an integer.
  *
- * @s: pointer to str origen.
- * Return: int of string or 0.
+ * @str: pointer to the source string.
+ * Return: integer value of the string or 0.
  */
-int _atoi(char *s)
+int string_to_integer(char *str)
 {
 	int sign = 1;
-	unsigned int number = 0;
+	unsigned int result = 0;
 
-	while (!('0' <= *s && *s <= '9') && *s != '\0')
+	while (!('0' <= *str && *str <= '9') && *str != '\0')
 	{
-		if (*s == '-')
+		if (*str == '-')
 			sign *= -1;
-		if (*s == '+')
+		if (*str == '+')
 			sign *= +1;
-		s++;
+		str++;
 	}
 
-	while ('0' <= *s && *s <= '9' && *s != '\0')
+	while ('0' <= *str && *str <= '9' && *str != '\0')
 	{
-
-		number = (number * 10) + (*s - '0');
-		s++;
+		result = (result * 10) + (*str - '0');
+		str++;
 	}
-	return (number * sign);
+
+	return (result * sign);
 }
 
 /**
- * count_characters - count the coincidences of character in string.
+ * count_occurrences - count the occurrences of a character in a string.
  *
- * @string: pointer to str origen.
- * @character: string with  chars to be counted
- * Return: int of string or 0.
+ * @str: pointer to the source string.
+ * @ch: pointer to the character to be counted.
+ * Return: number of occurrences or 0.
  */
-int count_characters(char *string, char *character)
+int count_occurrences(char *str, char *ch)
 {
-	int i = 0, counter = 0;
+	int i = 0, count = 0;
 
-	for (; string[i]; i++)
+	for (; str[i]; i++)
 	{
-		if (string[i] == character[0])
-			counter++;
+		if (str[i] == ch[0])
+			count++;
 	}
-	return (counter);
+	return count;
 }
 
